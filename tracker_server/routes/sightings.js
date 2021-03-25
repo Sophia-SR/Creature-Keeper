@@ -1,3 +1,4 @@
+const { Router } = require('express');
 const express = require('express'); 
 const router = express.Router();
 const pgp = require('pg-promise')({});
@@ -17,4 +18,27 @@ router.get('/', (req, res) => {
 })
 
 
+router.post("/", async (req, res) => {
+    console.log(req.body) 
+    try {
+         const addSighting = await db.query( 
+                "INSERT INTO sightings (animal_Name, sighting_date, sighting_location, healthy, contact) 
+                VALUES ($1 $2, $3, $4, $5) 
+                RETURNING *"
+                [req.body.animalName, req.body.sightDate, req.body.sightLoc, req.body.healthy, req.body.contact]
+                );  
+      console.log(addSighting);
+      res.status(201).json({
+        status: "success",
+        data: {
+          sighting: addSighting.rows[0],
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+});
+
+
+  
 module.exports = router;

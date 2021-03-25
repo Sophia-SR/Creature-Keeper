@@ -1,19 +1,29 @@
 const express = require('express'); 
+const app = express();
 const router = express.Router();
 const pgp = require('pg-promise')({});
 const db = require('../db');
 const bodyParser = require('body-parser');
 
 
-
-router.post('/', function(req, res) {
-    var sql = 'INSERT INTO  SET ?';
-  db.query(sql, req.body,function (err, data) { 
-      if (err) throw err;
-         console.log("User data is inserted successfully "); 
-  });
- res.redirect('/new_sighting');  // redirect to user form page after inserting the data
-}); 
+// router.post("/", async (req, res) => {
+//     try {
+//          const addSighting = async (body) => (
+//             await db.none(
+//                 'INSERT INTO sightings'
+//                 + ' (animal_Name, sighting_date, sighting_location, healthy, contact)'
+//                 + ' VALUES'
+//                 + ' (${animal_Name}, ${sighting_date}, ${sighting_location}, ${healthy}, ${contact})'
+//                 + ' RETURNING *',
+//                 body)
+//                 .catch(e => console.error(e.stack))
+//         );
+//       res.json(addSighting.rows[0]);
+//     } catch (err) {
+//       console.error(err.message);
+//     }
+//   });
+  
 
 
 
